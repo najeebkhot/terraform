@@ -23,4 +23,3 @@ resource "aws_instance" "webserver" {
         Name = "webserver"
     }
 }
-

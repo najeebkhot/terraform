@@ -6,7 +6,7 @@ variable "access_key" {
 
 variable "secret_key" {
     type      = string
-    default   = "XXXXX"
+    default   = "XXXX"
     sensitive = true
 }
 
