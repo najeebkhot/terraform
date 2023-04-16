@@ -16,7 +16,6 @@ data "aws_iam_policy_document" "sec-admin-permission" {
 
 #Attaching the policy to the group/user
 resource "aws_iam_user_policy_attachment" "sec-admin-access" {
-    #user = aws_iam_user.admin_user.name
-    group      = aws_iam_group.security.name
+    user = aws_iam_user.admin_user.name
     policy_arn = aws_iam_policy.admin-policy.arn
 }

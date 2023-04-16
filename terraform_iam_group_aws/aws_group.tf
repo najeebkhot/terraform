@@ -1,3 +1,5 @@
+#File for creating group
+
 resource "aws_iam_group" "security" {
     name = "sec-admin"
 }

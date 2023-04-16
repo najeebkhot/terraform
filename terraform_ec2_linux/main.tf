@@ -1,6 +1,6 @@
 #Create and bootstrap webserver
 resource "aws_instance" "webserver" {
-    ami                         = "ami-01d9e06b75f9d69c4"
+    ami                         = "ami-007855ac798b5175e"
     instance_type               = "t3.micro"
     key_name                    = aws_key_pair.webserver-key.key_name
     associate_public_ip_address = true
@@ -22,4 +22,6 @@ resource "aws_instance" "webserver" {
     tags = {
         Name = "webserver"
     }
+
+    #ami = "ami-007855ac798b5175e"
 }
