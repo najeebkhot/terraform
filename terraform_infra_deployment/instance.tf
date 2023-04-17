@@ -28,7 +28,7 @@
     #ami = "ami-007855ac798b5175e"
 }*/
 
-resource "aws_vpc" "my_vpc" {
+/*resource "aws_vpc" "my_vpc" {
   cidr_block = "172.16.0.0/16"
   tags = {
     Name = "demo-vpc"
@@ -42,10 +42,10 @@ resource "aws_subnet" "my_subnet" {
   tags = {
     Name = "demo-subnet-1"
   }
-}
+}*/
 
 resource "aws_network_interface" "nic" {
-  subnet_id   = aws_subnet.my_subnet.id
+  subnet_id   = aws_subnet.pub_sub_1.id
   private_ips = ["172.16.10.100"]
   tags = {
     Name = "primary_network_interface"
@@ -55,9 +55,15 @@ resource "aws_network_interface" "nic" {
 resource "aws_instance" "web-app-server" {
   ami           = "ami-007855ac798b5175e"
   instance_type = "t2.micro"
+  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.sg.id]
 
   network_interface {
     network_interface_id = aws_network_interface.nic.id
     device_index         = 0
+  }
+
+  tags = {
+    Name = "webserver01"
   }
 }
