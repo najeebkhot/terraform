@@ -6,13 +6,13 @@ provider "aws" {
 
 variable "access_key" {
     type      = string
-    default   = "AKIATPAUGR4U3INZQ74T"
+    default   = "XXXX"
     sensitive = true
 }
 
 variable "secret_key" {
     type      = string
-    default   = "wWpsUnw4X/h6uPCqVLlNyjVxdfmEPN2TsMV0UTUn"
+    default   = "XXXX"
     sensitive = true
 }
 
@@ -88,40 +88,13 @@ resource "aws_route_table_association" "rtbl-pri_sub2-association" {
   route_table_id = aws_route_table.rtbl.id
 }
 
-resource "aws_route_table_association" "rtbl-igateway-association" {
+/*resource "aws_route_table_association" "rtbl-igateway-association" {
   gateway_id     = aws_internet_gateway.igw.id
   route_table_id = aws_route_table.rtbl.id
-}
+}*/
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
-}
-
-#Create SG for allowing TCP/80 & TCP/22
-resource "aws_security_group" "sg" {
-    name        = "sg"
-    description = "Allow TCP/80 & TCP/22"
-    vpc_id      = aws_vpc.vpc.id
-    ingress {
-        description = "Allow SSH traffic"
-        from_port   = 22
-        to_port     = 22
-        protocol    = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-    ingress {
-        description = "allow traffic from TCP/80"
-        from_port   = 80
-        to_port     = 80
-        protocol    = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-    egress {
-        from_port   = 0
-        to_port     = 0
-        protocol    = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
 }
 
 resource "aws_network_interface" "nic" {
@@ -134,7 +107,6 @@ resource "aws_network_interface" "nic" {
 resource "aws_instance" "web-app-server" {
   ami           = "ami-007855ac798b5175e"
   instance_type = "t2.micro"
-  vpc_security_group_ids      = [aws_security_group.sg.id]
 
   network_interface {
     network_interface_id = aws_network_interface.nic.id
